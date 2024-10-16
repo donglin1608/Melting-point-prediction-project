@@ -1,0 +1,187 @@
+---
+title: "Week 2 Report"
+output: html_document
+date: "2024-10-15"
+---
+
+Load required packages
+```{r setup, include=FALSE}
+library(dplyr)
+library(ggplot2)
+library(skimr)
+library(corrplot)
+library(readxl)
+library(openxlsx)
+library(reshape2)
+library(plotly)
+```
+
+
+Load the dataset
+
+```{r cars}
+file_path <- "C:/Users/dongl/OneDrive/Desktop/Predict_melting_point/Predict_melting_point.xlsx - Descriptors - Copy.xlsx"
+
+descriptor_data <- readxl::read_excel(file_path)
+
+```
+
+Data cleaning
+# Rename columns Ave °C target_var
+# Handle missing value rows
+# Handle duplicate rows
+# Remove columns with more than 95% zero values
+# store clean data in descriptor_data_cleaned
+```{r pressure, echo=FALSE}
+# Rename columns Ave °C target_var
+colnames(descriptor_data)[colnames(descriptor_data) == "Ave °C"] <- "target_var"
+
+# Handle missing value rows
+initial_row_count <- nrow(descriptor_data)
+descriptor_data <- na.omit(descriptor_data)
+final_row_count <- nrow(descriptor_data)
+rows_removed <- initial_row_count - final_row_count
+cat("Number of rows removed due to missing values:", rows_removed, "\n")
+
+# Handle duplicate rows
+duplicated_rows <- sum(duplicated(descriptor_data))
+cat("Number of duplicate rows found:", duplicated_rows, "\n")
+descriptor_data <- descriptor_data[!duplicated(descriptor_data), ]
+
+# Remove columns with more than 95% zero values
+zero_values_percentage <- colSums(descriptor_data == 0) / nrow(descriptor_data) * 100
+columns_to_keep <- zero_values_percentage <= 95
+# store clean data in descriptor_data_cleaned
+descriptor_data_cleaned <- descriptor_data[, columns_to_keep]
+str(descriptor_data_cleaned)
+
+```
+# Summary column statistics 
+
+```{r}
+# Calculate column statistics for all columns except 'target_var'
+columns_to_analyze <- setdiff(names(descriptor_data_cleaned), c('D1'))  # Assuming D1 represents 'target_var'
+
+column_stats <- data.frame(Column = columns_to_analyze, Count = numeric(length(columns_to_analyze)), 
+                           Distinct = numeric(length(columns_to_analyze)), Min = numeric(length(columns_to_analyze)),
+                           Max = numeric(length(columns_to_analyze)), Average = numeric(length(columns_to_analyze)),
+                           Std_Dev = numeric(length(columns_to_analyze)), Range = numeric(length(columns_to_analyze)),
+                           Zero_Values = numeric(length(columns_to_analyze)), stringsAsFactors = FALSE)
+
+for (i in seq_along(columns_to_analyze)) {
+  col <- columns_to_analyze[i]
+  column_data <- descriptor_data_cleaned[[col]]
+  if (is.numeric(column_data)) {
+    column_stats[i, ] <- list(
+      Column = col,
+      Count = length(column_data),
+      Distinct = length(unique(column_data)),
+      Min = min(column_data, na.rm = TRUE),
+      Max = max(column_data, na.rm = TRUE),
+      Average = mean(column_data, na.rm = TRUE),
+      Std_Dev = sd(column_data, na.rm = TRUE),
+      Range = max(column_data, na.rm = TRUE) - min(column_data, na.rm = TRUE),
+      Zero_Values = sum(column_data == 0)
+    )
+  }
+}
+
+print(column_stats)
+```
+
+
+
+# Visualize column statistics contribute to the target variable and compare trend and identify pattern
+```{r}
+# Prepare data for plotting 'Distinct' values vs 'target_var'
+column_stats_distinct <- column_stats[, c("Column", "Distinct")]
+column_stats_distinct$target_var <- descriptor_data_cleaned$target_var[1:nrow(column_stats_distinct)]
+
+# Apply log transformation to Distinct to enhance visibility of small changes
+column_stats_distinct$Distinct <- log1p(column_stats_distinct$Distinct)
+
+# Normalize the values separately
+normalize <- function(x) {
+  return((x - min(x, na.rm = TRUE)) / (max(x, na.rm = TRUE) - min(x, na.rm = TRUE)))
+}
+
+column_stats_distinct$Distinct <- normalize(column_stats_distinct$Distinct)
+column_stats_distinct$target_var <- normalize(column_stats_distinct$target_var)
+
+# Reshape data for plotting
+melted_stats <- reshape2::melt(column_stats_distinct, id.vars = "Column")
+
+# Create interactive plot with Plotly
+p <- ggplot(melted_stats, aes(x = Column, y = value, color = variable, group = variable)) +
+  geom_line() +
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(title = "Distinct Values and 'target_var' Comparison (Log Transformed & Normalized)", x = "Descriptors", y = "Normalized Values", color = "Metric") +
+  theme_minimal()
+
+# Convert ggplot to Plotly plot
+p_plotly <- ggplotly(p)
+p_plotly
+
+
+```
+
+Visualize column statistics average vs 'target_var'
+```{r}
+# Prepare data for plotting average vs 'target_var'
+column_stats_avg <- column_stats[, c("Column", "Average")]
+column_stats_avg$target_var <- descriptor_data_cleaned$target_var[1:nrow(column_stats_avg)]
+
+# Apply log transformation to Average to enhance visibility of small changes
+column_stats_avg$Average <- log1p(column_stats_avg$Average)
+
+# Normalize the values separately
+column_stats_avg$Average <- normalize(column_stats_avg$Average)
+column_stats_avg$target_var <- normalize(column_stats_avg$target_var)
+
+# Reshape data for plotting average
+melted_avg <- reshape2::melt(column_stats_avg, id.vars = "Column")
+
+# Create interactive plot with Plotly
+p_avg <- ggplot(melted_avg, aes(x = Column, y = value, color = variable, group = variable)) +
+  geom_line() +
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(title = "Average and 'target_var' Comparison (Log Transformed & Normalized)", x = "Descriptors", y = "Normalized Values", color = "Metric") +
+  theme_minimal()
+
+# Convert ggplot to Plotly plot
+p_avg_plotly <- ggplotly(p_avg)
+p_avg_plotly
+```
+Visualize column statistics Standard Deviation vs 'target_var'
+```{r}
+
+
+# Prepare data for plotting standard deviation vs 'target_var'
+column_stats_std <- column_stats[, c("Column", "Std_Dev")]
+column_stats_std$target_var <- descriptor_data_cleaned$target_var[1:nrow(column_stats_std)]
+
+# Apply log transformation to Std_Dev to enhance visibility of small changes
+column_stats_std$Std_Dev <- log1p(column_stats_std$Std_Dev)
+
+# Normalize the values separately
+column_stats_std$Std_Dev <- normalize(column_stats_std$Std_Dev)
+column_stats_std$target_var <- normalize(column_stats_std$target_var)
+
+# Reshape data for plotting standard deviation
+melted_std <- reshape2::melt(column_stats_std, id.vars = "Column")
+
+# Create interactive plot with Plotly
+p_std <- ggplot(melted_std, aes(x = Column, y = value, color = variable, group = variable)) +
+  geom_line() +
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(title = "Standard Deviation and 'target_var' Comparison (Log Transformed & Normalized)", x = "Descriptors", y = "Normalized Values", color = "Metric") +
+  theme_minimal()
+
+# Convert ggplot to Plotly plot
+p_std_plotly <- ggplotly(p_std)
+p_std_plotly
+```
+
