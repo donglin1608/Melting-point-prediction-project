@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)http://127.0.0.1:4714/Refined%20Model.Rmd -->
+<html class=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <script type="application/shiny-singletons"></script>
+  <script type="application/html-dependencies">jquery[3.6.0];shiny-css[1.9.1];shiny-busy-indicators[1.9.1];shiny-javascript[1.9.1]</script>
+<script src="./Melting point predictors_v1_files/jquery.min.js.download"></script>
+<link href="./Melting point predictors_v1_files/shiny.min.css" rel="stylesheet">
+<link href="./Melting point predictors_v1_files/busy-indicators.css" rel="stylesheet">
+<script src="./Melting point predictors_v1_files/shiny.min.js.download"></script>  <script src="./Melting point predictors_v1_files/rmd_loader.js.download"></script>
+  <link href="./Melting point predictors_v1_files/rmd_loader.css" rel="stylesheet">
+<script src="./Melting point predictors_v1_files/header-attrs.js.download"></script><meta name="viewport" content="width=device-width, initial-scale=1"><link href="./Melting point predictors_v1_files/bootstrap.min.css" rel="stylesheet" type="text/css"><script src="./Melting point predictors_v1_files/bootstrap.min.js.download"></script><script src="./Melting point predictors_v1_files/html5shiv.min.js.download"></script><script src="./Melting point predictors_v1_files/respond.min.js.download"></script><style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style><script src="./Melting point predictors_v1_files/tabsets.js.download"></script><link href="./Melting point predictors_v1_files/default.css" rel="stylesheet" type="text/css"><script src="./Melting point predictors_v1_files/highlight.js.download"></script><link href="./Melting point predictors_v1_files/rmd_perf.css" rel="stylesheet" type="text/css"><script src="./Melting point predictors_v1_files/rmd_perf.js.download"></script><meta name="rstudio_origin" content="127.0.0.1:30171"><script src="./Melting point predictors_v1_files/rsiframe.js.download"></script>
+
+
+<meta name="generator" content="pandoc">
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+
+
+
+<meta name="date" content="2024-10-22">
+
+<title>Melting point predictors_v1</title>
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+<script type="text/javascript" src="./Melting point predictors_v1_files/MathJax.js.download"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888; display: contents}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+<body><div id="MathJax_Message" style="display: none;"></div>
+  <div>
+    <div class="shiny-panel-conditional" data-display-if="!output.__reactivedoc__" data-ns-prefix="" style="display: none;">
+      <div id="rmd_loader_wrapper">
+        <div id="rmd_loader" style="">
+          <p>Please wait...</p>
+          <img src="./Melting point predictors_v1_files/rmd_loader.gif">
+        </div>
+      </div>
+    </div>
+    <div id="__reactivedoc__" class="shiny-html-output shiny-bound-output" aria-live="polite">
+
+
+
+
+
+
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div id="section-header">
+
+
+
+<h1 class="title toc-ignore">Melting point predictors_v1</h1>
+<h4 class="date">2024-10-22</h4>
+
+</div>
+
+
+<pre class="r"><code class="hljs"><span class="hljs-keyword">library</span>(ggplot2)
+<span class="hljs-keyword">library</span>(dplyr)
+<span class="hljs-keyword">library</span>(readxl)
+<span class="hljs-keyword">library</span>(caret)
+<span class="hljs-keyword">library</span>(corrplot)
+<span class="hljs-keyword">library</span>(lattice)
+<span class="hljs-comment"># Load the dataset from excel file</span>
+Descriptors &lt;- read_excel(<span class="hljs-string">"C:/Users/dongl/Downloads/deep_clean_descriptor.xlsx"</span>)
+
+<span class="hljs-comment"># only print the columns name and data type</span>
+names(Descriptors)</code></pre>
+<pre><code class="hljs">##   [1] "Target_var"               "MaxAbsEStateIndex"       
+##   [3] "MaxEStateIndex"           "MinAbsEStateIndex"       
+##   [5] "MinEStateIndex"           "qed"                     
+##   [7] "SPS"                      "MolWt"                   
+##   [9] "HeavyAtomMolWt"           "ExactMolWt"              
+##  [11] "NumValenceElectrons"      "MaxPartialCharge"        
+##  [13] "MinPartialCharge"         "MaxAbsPartialCharge"     
+##  [15] "MinAbsPartialCharge"      "FpDensityMorgan1"        
+##  [17] "FpDensityMorgan2"         "FpDensityMorgan3"        
+##  [19] "BCUT2D_MWHI"              "BCUT2D_MWLOW"            
+##  [21] "BCUT2D_CHGHI"             "BCUT2D_CHGLO"            
+##  [23] "BCUT2D_LOGPHI"            "BCUT2D_LOGPLOW"          
+##  [25] "BCUT2D_MRHI"              "BCUT2D_MRLOW"            
+##  [27] "AvgIpc"                   "BalabanJ"                
+##  [29] "BertzCT"                  "Chi0"                    
+##  [31] "Chi0n"                    "Chi0v"                   
+##  [33] "Chi1"                     "Chi1n"                   
+##  [35] "Chi1v"                    "Chi2n"                   
+##  [37] "Chi2v"                    "Chi3n"                   
+##  [39] "Chi3v"                    "Chi4n"                   
+##  [41] "Chi4v"                    "HallKierAlpha"           
+##  [43] "Ipc"                      "Kappa1"                  
+##  [45] "Kappa2"                   "Kappa3"                  
+##  [47] "LabuteASA"                "PEOE_VSA1"               
+##  [49] "PEOE_VSA10"               "PEOE_VSA11"              
+##  [51] "PEOE_VSA12"               "PEOE_VSA13"              
+##  [53] "PEOE_VSA14"               "PEOE_VSA2"               
+##  [55] "PEOE_VSA3"                "PEOE_VSA4"               
+##  [57] "PEOE_VSA5"                "PEOE_VSA6"               
+##  [59] "PEOE_VSA7"                "PEOE_VSA8"               
+##  [61] "PEOE_VSA9"                "SMR_VSA1"                
+##  [63] "SMR_VSA10"                "SMR_VSA3"                
+##  [65] "SMR_VSA4"                 "SMR_VSA5"                
+##  [67] "SMR_VSA6"                 "SMR_VSA7"                
+##  [69] "SMR_VSA9"                 "SlogP_VSA1"              
+##  [71] "SlogP_VSA10"              "SlogP_VSA11"             
+##  [73] "SlogP_VSA12"              "SlogP_VSA2"              
+##  [75] "SlogP_VSA3"               "SlogP_VSA4"              
+##  [77] "SlogP_VSA5"               "SlogP_VSA6"              
+##  [79] "SlogP_VSA7"               "SlogP_VSA8"              
+##  [81] "TPSA"                     "EState_VSA1"             
+##  [83] "EState_VSA10"             "EState_VSA2"             
+##  [85] "EState_VSA3"              "EState_VSA4"             
+##  [87] "EState_VSA5"              "EState_VSA6"             
+##  [89] "EState_VSA7"              "EState_VSA8"             
+##  [91] "EState_VSA9"              "VSA_EState1"             
+##  [93] "VSA_EState10"             "VSA_EState2"             
+##  [95] "VSA_EState3"              "VSA_EState4"             
+##  [97] "VSA_EState5"              "VSA_EState6"             
+##  [99] "VSA_EState7"              "VSA_EState8"             
+## [101] "VSA_EState9"              "FractionCSP3"            
+## [103] "HeavyAtomCount"           "NHOHCount"               
+## [105] "NOCount"                  "NumAliphaticCarbocycles" 
+## [107] "NumAliphaticHeterocycles" "NumAliphaticRings"       
+## [109] "NumAromaticCarbocycles"   "NumAromaticHeterocycles" 
+## [111] "NumAromaticRings"         "NumHAcceptors"           
+## [113] "NumHDonors"               "NumHeteroatoms"          
+## [115] "NumRotatableBonds"        "NumSaturatedRings"       
+## [117] "RingCount"                "MolLogP"                 
+## [119] "MolMR"                    "fr_Al_COO"               
+## [121] "fr_Al_OH"                 "fr_ArN"                  
+## [123] "fr_Ar_COO"                "fr_Ar_N"                 
+## [125] "fr_Ar_OH"                 "fr_COO"                  
+## [127] "fr_COO2"                  "fr_C_O"                  
+## [129] "fr_C_O_noCOO"             "fr_NH0"                  
+## [131] "fr_NH1"                   "fr_NH2"                  
+## [133] "fr_alkyl_halide"          "fr_amide"                
+## [135] "fr_aniline"               "fr_aryl_methyl"          
+## [137] "fr_benzene"               "fr_bicyclic"             
+## [139] "fr_ester"                 "fr_ether"                
+## [141] "fr_halogen"               "fr_ketone"               
+## [143] "fr_ketone_Topliss"        "fr_methoxy"              
+## [145] "fr_nitro"                 "fr_nitro_arom"           
+## [147] "fr_para_hydroxylation"    "fr_phenol"               
+## [149] "fr_phenol_noOrthoHbond"   "fr_unbrch_alkane"</code></pre>
+<p>Calculate the Correlation Matrix</p>
+<pre class="r"><code class="hljs"><span class="hljs-comment"># Calculate the correlation matrix for all numeric descriptors</span>
+correlation_matrix &lt;- cor(Descriptors[ , !(names(Descriptors) %<span class="hljs-keyword">in</span>% <span class="hljs-string">"Target_var"</span>)])
+
+<span class="hljs-comment"># Visualize the correlation matrix</span>
+corrplot(correlation_matrix, method = <span class="hljs-string">"color"</span>)</code></pre>
+<p><img src="./Melting point predictors_v1_files/unnamed-chunk-2-1.png" width="672"></p>
+<p>Find lighly correlated columns and removed correlated is greater than
+0.8</p>
+<pre class="r"><code class="hljs"><span class="hljs-comment"># Load necessary package</span>
+<span class="hljs-keyword">library</span>(caret)
+<span class="hljs-keyword">library</span>(openxlsx)
+
+<span class="hljs-comment"># Define your high correlation threshold</span>
+high_corr_threshold &lt;- <span class="hljs-number">0.8</span> 
+
+<span class="hljs-comment"># Exclude the target_var column when calculating the correlation matrix</span>
+correlation_matrix &lt;- cor(Descriptors[, !(names(Descriptors) %<span class="hljs-keyword">in</span>% <span class="hljs-string">"target_var"</span>)], use = <span class="hljs-string">"pairwise.complete.obs"</span>)
+
+<span class="hljs-comment"># Find indices of highly correlated descriptors</span>
+highly_correlated &lt;- findCorrelation(correlation_matrix, cutoff = high_corr_threshold)
+
+<span class="hljs-comment"># Remove highly correlated columns, but keep the target_var column</span>
+cleaned_descriptors &lt;- Descriptors[, -highly_correlated, drop = <span class="hljs-literal">FALSE</span>]
+
+<span class="hljs-comment"># Check dimensions after removing highly correlated columns</span>
+print(dim(cleaned_descriptors))  </code></pre>
+<pre><code class="hljs">## [1] 2701   96</code></pre>
+<pre class="r"><code class="hljs"><span class="hljs-comment"># Ensure the target_var column remains in the cleaned data</span>
+cleaned_descriptors$target_var &lt;- Descriptors$target_var</code></pre>
+<pre><code class="hljs">## Warning: Unknown or uninitialised column: `target_var`.</code></pre>
+<pre class="r"><code class="hljs">write.xlsx(cleaned_descriptors, <span class="hljs-string">"C:/Users/dongl/Downloads/cleaned_descriptors.xlsx"</span>)
+
+<span class="hljs-comment"># Display success message</span>
+cat(<span class="hljs-string">"File saved successfully at: C:/Users/dongl/Downloads/cleaned_descriptors.xlsx"</span>)</code></pre>
+<pre><code class="hljs">## File saved successfully at: C:/Users/dongl/Downloads/cleaned_descriptors.xlsx</code></pre>
+<p>Handle perfectly collinear variables</p>
+<pre class="r"><code class="hljs"><span class="hljs-comment"># Identify which variables are aliased (linearly dependent)</span>
+aliased_vars &lt;- alias(lm(Target_var ~ ., data = cleaned_descriptors))$Complete
+print(aliased_vars)</code></pre>
+<pre><code class="hljs">##                   (Intercept) MaxEStateIndex MinAbsEStateIndex MinEStateIndex
+## NumAliphaticRings 0           0              0                 0             
+## fr_COO            0           0              0                 0             
+##                   qed MinPartialCharge MinAbsPartialCharge FpDensityMorgan3
+## NumAliphaticRings 0   0                0                   0               
+## fr_COO            0   0                0                   0               
+##                   BCUT2D_MWLOW BCUT2D_CHGLO BCUT2D_LOGPHI BCUT2D_LOGPLOW
+## NumAliphaticRings 0            0            0             0             
+## fr_COO            0            0            0             0             
+##                   BCUT2D_MRHI BCUT2D_MRLOW AvgIpc BalabanJ Chi4v HallKierAlpha
+## NumAliphaticRings 0           0            0      0        0     0            
+## fr_COO            0           0            0      0        0     0            
+##                   Ipc Kappa3 PEOE_VSA1 PEOE_VSA10 PEOE_VSA11 PEOE_VSA12
+## NumAliphaticRings 0   0      0         0          0          0         
+## fr_COO            0   0      0         0          0          0         
+##                   PEOE_VSA13 PEOE_VSA14 PEOE_VSA2 PEOE_VSA3 PEOE_VSA4 PEOE_VSA5
+## NumAliphaticRings 0          0          0         0         0         0        
+## fr_COO            0          0          0         0         0         0        
+##                   PEOE_VSA6 PEOE_VSA7 PEOE_VSA8 PEOE_VSA9 SMR_VSA1 SMR_VSA3
+## NumAliphaticRings 0         0         0         0         0        0       
+## fr_COO            0         0         0         0         0        0       
+##                   SMR_VSA4 SMR_VSA6 SMR_VSA9 SlogP_VSA1 SlogP_VSA10 SlogP_VSA11
+## NumAliphaticRings 0        0        0        0          0           0          
+## fr_COO            0        0        0        0          0           0          
+##                   SlogP_VSA2 SlogP_VSA3 SlogP_VSA4 SlogP_VSA7 SlogP_VSA8 TPSA
+## NumAliphaticRings 0          0          0          0          0          0   
+## fr_COO            0          0          0          0          0          0   
+##                   EState_VSA1 EState_VSA10 EState_VSA2 EState_VSA3 EState_VSA4
+## NumAliphaticRings 0           0            0           0           0          
+## fr_COO            0           0            0           0           0          
+##                   EState_VSA5 EState_VSA6 EState_VSA7 EState_VSA8 EState_VSA9
+## NumAliphaticRings 0           0           0           0           0          
+## fr_COO            0           0           0           0           0          
+##                   VSA_EState1 VSA_EState10 VSA_EState3 VSA_EState4 VSA_EState5
+## NumAliphaticRings 0           0            0           0           0          
+## fr_COO            0           0            0           0           0          
+##                   VSA_EState6 VSA_EState8 VSA_EState9 FractionCSP3 NHOHCount
+## NumAliphaticRings 0           0           0           0            0        
+## fr_COO            0           0           0           0            0        
+##                   NumAliphaticCarbocycles NumAliphaticHeterocycles
+## NumAliphaticRings 1                       1                       
+## fr_COO            0                       0                       
+##                   NumHeteroatoms NumSaturatedRings fr_Al_COO fr_Al_OH fr_ArN
+## NumAliphaticRings 0              0                 0         0        0     
+## fr_COO            0              0                 1         0        0     
+##                   fr_Ar_COO fr_Ar_N fr_C_O_noCOO fr_NH0 fr_NH1 fr_NH2
+## NumAliphaticRings 0         0       0            0      0      0     
+## fr_COO            1         0       0            0      0      0     
+##                   fr_alkyl_halide fr_amide fr_aniline fr_aryl_methyl
+## NumAliphaticRings 0               0        0          0             
+## fr_COO            0               0        0          0             
+##                   fr_bicyclic fr_ester fr_ether fr_halogen fr_ketone_Topliss
+## NumAliphaticRings 0           0        0        0          0                
+## fr_COO            0           0        0        0          0                
+##                   fr_methoxy fr_nitro_arom fr_para_hydroxylation
+## NumAliphaticRings 0          0             0                    
+## fr_COO            0          0             0                    
+##                   fr_phenol_noOrthoHbond
+## NumAliphaticRings 0                     
+## fr_COO            0</code></pre>
+<p>Remove Aliased Variables</p>
+<pre class="r"><code class="hljs"><span class="hljs-comment"># Check if aliased_vars is not empty before proceeding</span>
+<span class="hljs-keyword">if</span> (!is.null(aliased_vars)) {
+  <span class="hljs-comment"># Remove only the aliased variables, but keep the target variable</span>
+  clean_data_reduced &lt;- cleaned_descriptors[, !(names(cleaned_descriptors) %<span class="hljs-keyword">in</span>% rownames(aliased_vars))]
+  
+  <span class="hljs-comment"># Check dimensions of the reduced data</span>
+  print(dim(clean_data_reduced))
+} <span class="hljs-keyword">else</span> {
+  print(<span class="hljs-string">"No aliased variables found."</span>)
+  clean_data_reduced &lt;- cleaned_descriptors  <span class="hljs-comment"># No change if no aliased variables found</span>
+}</code></pre>
+<pre><code class="hljs">## [1] 2701   94</code></pre>
+<p>Check for multicollinearity</p>
+<pre class="r"><code class="hljs"><span class="hljs-keyword">library</span>(car)
+
+<span class="hljs-comment"># Fit the model again on the reduced data</span>
+model_full &lt;- lm(Target_var ~ ., data = clean_data_reduced)
+
+<span class="hljs-comment"># Check for multicollinearity using VIF</span>
+vif_values &lt;- vif(model_full)
+
+<span class="hljs-comment"># Print the VIF values</span>
+print(vif_values)</code></pre>
+<pre><code class="hljs">##           MaxEStateIndex        MinAbsEStateIndex           MinEStateIndex 
+##             1.079827e+01             4.370729e+00             1.520905e+01 
+##                      qed         MinPartialCharge      MinAbsPartialCharge 
+##             3.167500e+00             6.085331e+00             1.082026e+01 
+##         FpDensityMorgan3             BCUT2D_MWLOW             BCUT2D_CHGLO 
+##             2.594573e+00             6.330866e+00             2.105928e+01 
+##            BCUT2D_LOGPHI           BCUT2D_LOGPLOW              BCUT2D_MRHI 
+##             1.112207e+01             1.898086e+01             3.629107e+00 
+##             BCUT2D_MRLOW                   AvgIpc                 BalabanJ 
+##             7.256951e+00             9.349187e+00             5.813696e+00 
+##                    Chi4v            HallKierAlpha                      Ipc 
+##             9.023299e+00             9.406099e+01             2.068348e+00 
+##                   Kappa3                PEOE_VSA1               PEOE_VSA10 
+##             1.064021e+00             4.402245e+05             3.757520e+05 
+##               PEOE_VSA11               PEOE_VSA12               PEOE_VSA13 
+##             3.031589e+05             1.665168e+05             1.264519e+05 
+##               PEOE_VSA14                PEOE_VSA2                PEOE_VSA3 
+##             2.980441e+05             4.222813e+05             3.115832e+05 
+##                PEOE_VSA4                PEOE_VSA5                PEOE_VSA6 
+##             2.868718e+05             2.749624e+05             1.383539e+07 
+##                PEOE_VSA7                PEOE_VSA8                PEOE_VSA9 
+##             3.648262e+06             1.088073e+06             8.909903e+05 
+##                 SMR_VSA1                 SMR_VSA3                 SMR_VSA4 
+##             1.923624e+02             3.015837e+01             3.204040e+00 
+##                 SMR_VSA6                 SMR_VSA9               SlogP_VSA1 
+##             2.433001e+01             5.599944e+00             1.283616e+01 
+##              SlogP_VSA10              SlogP_VSA11               SlogP_VSA2 
+##             3.782898e+01             1.628002e+01             4.980168e+01 
+##               SlogP_VSA3               SlogP_VSA4               SlogP_VSA7 
+##             3.956904e+00             7.690849e+00             4.643477e+00 
+##               SlogP_VSA8                     TPSA              EState_VSA1 
+##             5.627135e+00             1.570104e+02             9.867705e+05 
+##             EState_VSA10              EState_VSA2              EState_VSA3 
+##             7.500559e+05             7.393492e+05             9.294185e+05 
+##              EState_VSA4              EState_VSA5              EState_VSA6 
+##             1.512312e+06             8.607622e+06             2.164872e+06 
+##              EState_VSA7              EState_VSA8              EState_VSA9 
+##             4.448057e+06             6.182545e+06             1.690151e+06 
+##              VSA_EState1             VSA_EState10              VSA_EState3 
+##             9.340535e+01             5.663934e+01             2.864858e+01 
+##              VSA_EState4              VSA_EState5              VSA_EState6 
+##             1.233401e+01             5.652962e+00             4.816154e+01 
+##              VSA_EState8              VSA_EState9             FractionCSP3 
+##             8.348528e+00             5.990901e+00             1.319833e+01 
+##                NHOHCount  NumAliphaticCarbocycles NumAliphaticHeterocycles 
+##             1.012428e+02             3.941328e+00             4.245123e+00 
+##           NumHeteroatoms        NumSaturatedRings                fr_Al_COO 
+##             2.029109e+02             3.969781e+00             9.544258e+00 
+##                 fr_Al_OH                   fr_ArN                fr_Ar_COO 
+##             5.432325e+00             7.494758e+00             9.023145e+00 
+##                  fr_Ar_N             fr_C_O_noCOO                   fr_NH0 
+##             1.130106e+01             3.377194e+01             4.223986e+01 
+##                   fr_NH1                   fr_NH2          fr_alkyl_halide 
+##             3.417416e+01             7.219841e+01             7.542480e+00 
+##                 fr_amide               fr_aniline           fr_aryl_methyl 
+##             5.370057e+00             1.426628e+01             2.533823e+00 
+##              fr_bicyclic                 fr_ester                 fr_ether 
+##             2.889894e+00             6.180141e+00             1.212688e+01 
+##               fr_halogen        fr_ketone_Topliss               fr_methoxy 
+##             4.639737e+01             1.824311e+00             4.139450e+00 
+##            fr_nitro_arom    fr_para_hydroxylation   fr_phenol_noOrthoHbond 
+##             1.209392e+01             1.638128e+00             9.651380e+00</code></pre>
+<pre class="r"><code class="hljs"><span class="hljs-comment"># Set the VIF threshold</span>
+vif_threshold &lt;- <span class="hljs-number">10</span>
+
+<span class="hljs-comment"># Identify variables with high VIF values</span>
+high_vif_vars &lt;- names(vif_values[vif_values &gt; vif_threshold])
+
+<span class="hljs-comment"># Print the variables that will be removed</span>
+print(high_vif_vars)</code></pre>
+<pre><code class="hljs">##  [1] "MaxEStateIndex"      "MinEStateIndex"      "MinAbsPartialCharge"
+##  [4] "BCUT2D_CHGLO"        "BCUT2D_LOGPHI"       "BCUT2D_LOGPLOW"     
+##  [7] "HallKierAlpha"       "PEOE_VSA1"           "PEOE_VSA10"         
+## [10] "PEOE_VSA11"          "PEOE_VSA12"          "PEOE_VSA13"         
+## [13] "PEOE_VSA14"          "PEOE_VSA2"           "PEOE_VSA3"          
+## [16] "PEOE_VSA4"           "PEOE_VSA5"           "PEOE_VSA6"          
+## [19] "PEOE_VSA7"           "PEOE_VSA8"           "PEOE_VSA9"          
+## [22] "SMR_VSA1"            "SMR_VSA3"            "SMR_VSA6"           
+## [25] "SlogP_VSA1"          "SlogP_VSA10"         "SlogP_VSA11"        
+## [28] "SlogP_VSA2"          "TPSA"                "EState_VSA1"        
+## [31] "EState_VSA10"        "EState_VSA2"         "EState_VSA3"        
+## [34] "EState_VSA4"         "EState_VSA5"         "EState_VSA6"        
+## [37] "EState_VSA7"         "EState_VSA8"         "EState_VSA9"        
+## [40] "VSA_EState1"         "VSA_EState10"        "VSA_EState3"        
+## [43] "VSA_EState4"         "VSA_EState6"         "FractionCSP3"       
+## [46] "NHOHCount"           "NumHeteroatoms"      "fr_Ar_N"            
+## [49] "fr_C_O_noCOO"        "fr_NH0"              "fr_NH1"             
+## [52] "fr_NH2"              "fr_aniline"          "fr_ether"           
+## [55] "fr_halogen"          "fr_nitro_arom"</code></pre>
+<pre class="r"><code class="hljs"><span class="hljs-comment"># Remove high VIF variables from the dataset</span>
+clean_data_vif_reduced &lt;- clean_data_reduced[, !(names(clean_data_reduced) %<span class="hljs-keyword">in</span>% high_vif_vars)]
+
+<span class="hljs-comment"># Check dimensions of the reduced dataset</span>
+print(dim(clean_data_vif_reduced))</code></pre>
+<pre><code class="hljs">## [1] 2701   38</code></pre>
+<p>Train a regression Model</p>
+<pre class="r"><code class="hljs"><span class="hljs-comment"># Train a linear regression model</span>
+model_regression &lt;- lm(Target_var ~ ., data = clean_data_vif_reduced)
+
+<span class="hljs-comment"># Summarize the model</span>
+summary(model_regression)</code></pre>
+<pre><code class="hljs">## 
+## Call:
+## lm(formula = Target_var ~ ., data = clean_data_vif_reduced)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -162.538  -34.944   -5.624   29.823  275.742 
+## 
+## Coefficients:
+##                            Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)              -5.229e+02  5.996e+01  -8.721  &lt; 2e-16 ***
+## MinAbsEStateIndex        -3.374e+01  2.910e+00 -11.594  &lt; 2e-16 ***
+## qed                       8.304e+01  1.010e+01   8.218 3.20e-16 ***
+## MinPartialCharge         -1.258e+02  1.332e+01  -9.446  &lt; 2e-16 ***
+## FpDensityMorgan3         -3.374e+01  2.378e+00 -14.188  &lt; 2e-16 ***
+## BCUT2D_MWLOW              2.673e+01  5.063e+00   5.279 1.41e-07 ***
+## BCUT2D_MRHI               5.359e+00  7.263e-01   7.379 2.12e-13 ***
+## BCUT2D_MRLOW              1.098e+00  2.738e+00   0.401 0.688521    
+## AvgIpc                    8.374e+01  4.883e+00  17.149  &lt; 2e-16 ***
+## BalabanJ                  3.410e+01  2.844e+00  11.988  &lt; 2e-16 ***
+## Chi4v                     4.188e+00  1.290e+00   3.246 0.001184 ** 
+## Ipc                      -1.165e-11  4.890e-12  -2.382 0.017268 *  
+## Kappa3                    1.195e-02  4.567e-03   2.616 0.008954 ** 
+## SMR_VSA4                  2.421e+00  4.192e-01   5.776 8.53e-09 ***
+## SMR_VSA9                 -3.606e-01  3.127e-01  -1.153 0.248933    
+## SlogP_VSA3               -1.514e+00  2.795e-01  -5.415 6.66e-08 ***
+## SlogP_VSA4                8.488e-01  2.115e-01   4.012 6.18e-05 ***
+## SlogP_VSA7                3.091e-01  3.356e-01   0.921 0.357158    
+## SlogP_VSA8                3.134e+00  2.986e-01  10.494  &lt; 2e-16 ***
+## VSA_EState5               5.306e-01  6.554e-01   0.810 0.418266    
+## VSA_EState8              -9.947e+00  5.022e-01 -19.808  &lt; 2e-16 ***
+## VSA_EState9              -4.745e+00  1.135e+00  -4.180 3.01e-05 ***
+## NumAliphaticCarbocycles   8.133e+00  5.651e+00   1.439 0.150219    
+## NumAliphaticHeterocycles  4.899e+01  6.046e+00   8.103 8.09e-16 ***
+## NumSaturatedRings        -2.006e+01  6.111e+00  -3.282 0.001044 ** 
+## fr_Al_COO                 2.378e+01  4.375e+00   5.434 6.00e-08 ***
+## fr_Al_OH                 -4.166e+00  3.776e+00  -1.103 0.270048    
+## fr_ArN                    3.572e+01  3.852e+00   9.274  &lt; 2e-16 ***
+## fr_Ar_COO                 7.655e+01  4.935e+00  15.512  &lt; 2e-16 ***
+## fr_alkyl_halide          -6.153e+00  1.594e+00  -3.860 0.000116 ***
+## fr_amide                  3.726e+01  2.528e+00  14.740  &lt; 2e-16 ***
+## fr_aryl_methyl            1.327e+01  2.433e+00   5.456 5.33e-08 ***
+## fr_bicyclic               1.060e+01  2.919e+00   3.633 0.000285 ***
+## fr_ester                 -1.300e+01  3.647e+00  -3.563 0.000373 ***
+## fr_ketone_Topliss         1.084e+01  4.157e+00   2.607 0.009197 ** 
+## fr_methoxy               -1.040e+01  3.295e+00  -3.156 0.001617 ** 
+## fr_para_hydroxylation    -8.073e+00  2.518e+00  -3.206 0.001362 ** 
+## fr_phenol_noOrthoHbond    1.958e+01  3.469e+00   5.644 1.84e-08 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 52.75 on 2663 degrees of freedom
+## Multiple R-squared:  0.6859, Adjusted R-squared:  0.6815 
+## F-statistic: 157.2 on 37 and 2663 DF,  p-value: &lt; 2.2e-16</code></pre>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("section-TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "mathjax-local/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+
+</div>
+  </div>
+
+
+</body></html>
